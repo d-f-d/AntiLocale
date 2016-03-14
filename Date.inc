@@ -59,7 +59,7 @@ class Date {
         $transform = $format[$i];
         $i++;
       }
-      $form = '0';
+      $form = 0;
       if (is_numeric($format[$i])) {
         $form = (int)$format[$i];
         $i++;

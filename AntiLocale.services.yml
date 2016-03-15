@@ -1,0 +1,5 @@
+services:
+  twig.locale-extension:
+    class: d\AntiLocale\TwigExtention
+    tags:
+      - { name: twig.extension }

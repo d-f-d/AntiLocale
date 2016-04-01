@@ -33,11 +33,13 @@ class Plural {
       case $count % 100 === 11 :
       case $count % 100 === 12 :
       case $count % 100 === 13 :
+      case $count % 100 === 14 :
         return 2;
       case $count % 10 === 1:
         return 0;
       case $count % 10 === 2:
       case $count % 10 === 3:
+      case $count % 10 === 4:
         return 1;
       default:
         throw new Exception('plural format for ' . $count . ' not defined');

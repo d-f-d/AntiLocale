@@ -20,7 +20,7 @@ class Date {
       ['Воскресеньем', 'Понедельником', 'Вторником', 'Средой', 'Четвергом', 'Пятницей', 'Субботой', 'Воскресеньем'], // следующим/ей ...
       ['Воскресеньи', 'Понедельнике', 'Вторнике', 'Среде', 'Четверге', 'Пятнице', 'Субботе', 'Воскресеньи'], // отчёт о ...
     ],
-    'm' =>[
+    'm' => [
       ['', 'Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
       ['', 'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
       ['', 'Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря'],
@@ -30,7 +30,16 @@ class Date {
       ['', 'Январе', 'Феврале', 'Марте', 'Апреле', 'Мае', 'Июне', 'Июле', 'Августе', 'Сентябре', 'Октябре', 'Ноябре', 'Декабре'],
     ]
   ];
+  static $units = [
+    '1 год|@count года|@count лет'           => 31536000,
+    '1 месяц|@count месяца|@count месяцев'   => 2592000,
+    '1 неделя|@count недели|@count недель'   => 604800,
+    '1 день|@count дня|@count дней'          => 86400,
+    '1 час|@count часа|@count часов'         => 3600,
+    '1 минута|@count минуты|@count минут'    => 60,
+    '1 секунда|@count секунды|@count секунд' => 1,
 
+  ];
   static public function format($format, $timestamp = NULL) {
     if ($timestamp === NULL) {
       $timestamp = REQUEST_TIME;
@@ -61,12 +70,32 @@ class Date {
       }
       $form = 0;
       if (is_numeric($format[$i])) {
-        $form = (int)$format[$i];
+        $form = (int) $format[$i];
         $i++;
       }
-      $el = static::$date[$format[$i]][$form][(int)date($format[$i], $timestamp)];
+      $el = static::$date[$format[$i]][$form][(int) date($format[$i], $timestamp)];
       $out .= !$transform ? $el : ($transform === 'l' ? strtolower($el) : strtoupper($el));
     }
     return $has_tokens ? strftime($out, $timestamp) : $out;
+  }
+
+  static public function formatInterval($interval, $granularity = 2) {
+    $output = [];
+    foreach (static::$units as $key => $value) {
+      $key = explode('|', $key);
+      if ($interval >= $value) {
+        $output[]= ($output ? ' ' : '') . Plural::format(floor($interval / $value), $key);
+        $interval %= $value;
+        $granularity--;
+      }
+      elseif ($output) {
+        break;
+      }
+
+      if ($granularity == 0) {
+        break;
+      }
+    }
+    return implode(' ', $output);
   }
 }

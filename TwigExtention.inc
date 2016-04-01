@@ -21,6 +21,7 @@ class TwigExtention extends Twig_Extension {
   public function getFilters() {
     return [
       new Twig_SimpleFilter('format_date_locale', [$this, 'dateFormat'], ['is_safe' => ['html']]),
+      new Twig_SimpleFilter('format_interval_locale', [$this, 'intervalFormat'], ['is_safe' => ['html']]),
       new Twig_SimpleFilter('format_plural_locale', [$this, 'pluralFormat'], ['is_safe' => ['html']]),
     ];
   }
@@ -31,12 +32,17 @@ class TwigExtention extends Twig_Extension {
   public function getFunctions() {
     return [
       new Twig_SimpleFunction('format_date_locale', [$this, 'dateFormat'], ['is_safe' => ['html']]),
+      new Twig_SimpleFunction('format_interval_locale', [$this, 'intervalFormat'], ['is_safe' => ['html']]),
       new Twig_SimpleFunction('format_plural_locale', [$this, 'pluralFormat'], ['is_safe' => ['html']]),
     ];
   }
 
   function dateFormat($timestamp, $format) {
     return Date::format($format, $timestamp);
+  }
+
+  function intervalFormat($interval, $granularity = 2) {
+    return Date::formatInterval(REQUEST_TIME - $interval, $granularity);
   }
 
   function pluralFormat($count, $strings) {

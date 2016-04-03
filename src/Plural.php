@@ -6,7 +6,7 @@
  * Time: 23:33
  */
 
-namespace d\AntiLocale;
+namespace dfd\AntiLocale;
 
 use Exception;
 

@@ -6,7 +6,7 @@
  * Time: 21:39
  */
 
-namespace d\AntiLocale;
+namespace dfd\AntiLocale;
 
 
 use Twig_Extension;

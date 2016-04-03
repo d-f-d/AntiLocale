@@ -1,5 +1,5 @@
 services:
-  twig.locale-extension:
-    class: d\AntiLocale\TwigExtention
+  twig.dfd.locale-extension:
+    class: dfd\AntiLocale\TwigExtention
     tags:
       - { name: twig.extension }

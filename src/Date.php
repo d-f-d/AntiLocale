@@ -6,7 +6,7 @@
  * Time: 0:45
  */
 
-namespace d\AntiLocale;
+namespace dfd\AntiLocale;
 
 
 class Date {
@@ -84,14 +84,13 @@ class Date {
     foreach (static::$units as $key => $value) {
       $key = explode('|', $key);
       if ($interval >= $value) {
-        $output[]= ($output ? ' ' : '') . Plural::format(floor($interval / $value), $key);
+        $output[]= Plural::format(floor($interval / $value), $key);
         $interval %= $value;
         $granularity--;
       }
       elseif ($output) {
         break;
       }
-
       if ($granularity == 0) {
         break;
       }

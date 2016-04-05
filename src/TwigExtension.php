@@ -13,7 +13,7 @@ use Twig_Extension;
 use Twig_SimpleFilter;
 use Twig_SimpleFunction;
 
-class TwigExtention extends Twig_Extension {
+class TwigExtension extends Twig_Extension {
 
   /**
    * @return array
